@@ -49,7 +49,7 @@ const Producteur = () => {
         }else{
           
                 axios
-                .put(`http://localhost:5002/api/products`,{
+                .post("http://localhost:5002/api/products/moulin",{
                   product_id,
                   date_extraction,
                  

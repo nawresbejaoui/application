@@ -50,7 +50,7 @@ const Producteur = () => {
         }else{
           
                 axios
-                .post("http://localhost:5002/api/products/post",{
+                .post("http://localhost:5002/api/products/producteur",{
                   product_id,
                   date_production,
                   lieu,

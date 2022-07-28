@@ -118,6 +118,40 @@ app.post('/api/products/post',(req,res)=>{
     })
 })
 
+
+app.post('/api/products/moulin',(req,res)=>{
+    const {product_id,date_extraction}=req.body;
+    const sqlInsert="INSERT INTO products (product_id,date_extraction) VALUES (?,?)";
+    db.query(sqlInsert,[product_id,date_extraction],(error,result)=>{
+        if(error){
+            console.log(error);
+        }
+    })
+})
+app.post('/api/products/producteur',(req,res)=>{
+    const {product_id,date_production,lieu}=req.body;
+    const sqlInsert="INSERT INTO products (product_id,date_production,lieu) VALUES (?,?,?)";
+    db.query(sqlInsert,[product_id,date_production,lieu],(error,result)=>{
+        if(error){
+            console.log(error);
+        }
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.put('/api/products/:product_id',(req,res)=>{
     const {product_id}=req.params;
     console.log(req.params.product_id);
