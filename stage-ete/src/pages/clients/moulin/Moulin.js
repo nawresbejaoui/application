@@ -1,7 +1,8 @@
 import React , {useState} from 'react';
-import {Link} from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import './moulin.css';
 import axios from "axios";
+import 'react-toastify/dist/ReactToastify.css';
 import { toast} from 'react-toastify';
 import styled from "styled-components";
 
@@ -28,11 +29,11 @@ const initialState={
   
 };
 
-const Moulin = () => {
+const Producteur = () => {
     const [state,setState]=useState(initialState);
     const {product_id,date_extraction}=state;
 
-
+  
 
 
 
@@ -41,31 +42,25 @@ const Moulin = () => {
 
  
 
-    const handleSubmit=async(e)=>{
+    const handleSubmit=(e)=>{
         e.preventDefault();
-        if(!product_id || !date_extraction  ){
+        if(!product_id || !date_extraction ){
             toast.error("please provide value into each input field")
         }else{
-              
-              
-               
-                axios.get(`http://localhost:5002/api/products/get/${product_id}`).then(resp=>{
-                 let product=resp.data;
-                  console.log(product,"hello");
-                  product.date_extraction=date_extraction;
-                  
-                  axios
-                  .put(`http://localhost:5002/api/products/${product_id}`,product)
-                  .then(()=>{
-                    console.log(product);
-                     setState({product_id:"",date_extraction:""});
-                  })
-                  .catch((err)=>toast.error(err.response.data));
-                  toast.success('product added successfully');
-                })        
+          
+                axios
+                .put(`http://localhost:5002/api/products`,{
+                  product_id,
+                  date_extraction,
+                 
 
+                })
+                .then(()=>{
+                   setState({product_id:"",date_extraction:""});
+                })
+                .catch((err)=>toast.error(err.response.data));
+                toast.success('product added successfully');
                
-                
                
         }
     };
@@ -80,6 +75,7 @@ const Moulin = () => {
 
   return (
     <Container>
+     
    
     <div style={{marginRight:"350px"}}>
         <form style={{
@@ -100,7 +96,7 @@ const Moulin = () => {
         onChange={handleInputChange}
 
         />
-        <label htmlFor='date_extraction'>Date_Extraction</label>
+        <label htmlFor='date_extraction'>date_extraction</label>
         <input
         type="date"
         id="date_extraction"
@@ -110,9 +106,9 @@ const Moulin = () => {
         onChange={handleInputChange}
         
         />
-      
+       
 
-        <input type="submit" value="Save"/>
+        <input type="submit"    value="Save"/>
         <Link to="/client">
             <input type="button" value="Go Back" />
         </Link>
@@ -129,4 +125,4 @@ const Moulin = () => {
 
 }
 
-export default Moulin
+export default Producteur

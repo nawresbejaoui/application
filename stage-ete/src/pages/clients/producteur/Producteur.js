@@ -5,7 +5,8 @@ import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
 import { toast} from 'react-toastify';
 import styled from "styled-components";
-
+import PageHeader from "../../../components/PageHeader";
+import Storefront from '@mui/icons-material/Storefront';
 
 const Container = styled.div`
   width: 100vw;
@@ -74,6 +75,12 @@ const Producteur = () => {
 
 
   return (
+    <>
+     <PageHeader
+                title="New Product"
+                subTitle="C'est l'interface du producteur"
+                icon={<Storefront fontSize="large" />}
+            />
     <Container>
      
    
@@ -130,6 +137,8 @@ const Producteur = () => {
     </div>
    
     </Container>
+    </>
+
   )
 
 }

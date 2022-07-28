@@ -3,6 +3,8 @@ const app=express()
 const bodyparser=require('body-parser')
 const cors=require('cors')
 const mysql=require('mysql2')
+const bcrypt=require('bcrypt');
+const saltRounds=10;
 
 const db=mysql.createPool({
     host:"localhost",
@@ -116,6 +118,24 @@ app.post('/api/products/post',(req,res)=>{
     })
 })
 
+app.put('/api/products/:product_id',(req,res)=>{
+    const {product_id}=req.params;
+    console.log(req.params.product_id);
+    console.log(req.body);
+   
+    const{date_production,lieu,date_extraction,date_control,technique_stockage,n_lots,date_expiration}=req.body;
+
+    const sqlUpdate="UPDATE products SET  date_production=?,lieu=?,date_extraction=?,date_control=?,technique_stockage=?,n_lots=?,date_expiration=? WHERE product_id=? ";
+    db.query(sqlUpdate,[date_production,lieu,date_extraction,date_control,technique_stockage,n_lots,date_expiration,product_id],(error,result)=>{
+        if(error){
+            console.log(error);
+        }else
+        console.log(result);
+        res.send(result);
+
+    
+    })
+})
 app.get('/api/products/get/:product_id',(req,res)=>{
     const {product_id}=req.params;
 
@@ -124,26 +144,14 @@ app.get('/api/products/get/:product_id',(req,res)=>{
         if(error){
             console.log(error);
         }
-        res.send(result[0]);
-    })
-})
-
-
-app.put('/api/products/:product_id',(req,res)=>{
-    const {product_id}=req.params;
-   
-    const{date_production,lieu,date_extraction,date_control,technique_stockage,n_lots,date_expiration}=req.body;
-
-    const sqlUpdate="UPDATE products SET  date_production=?,lieu=?,date_extraction=?,date_control=?,technique_stockage=?,n_lots=?,date_expiration=? WHERE (product_id=? )";
-    db.query(sqlUpdate,[date_production,lieu,date_extraction,date_control,technique_stockage,n_lots,date_expiration,product_id],(error,result)=>{
-        if(error){
-            console.log(error);
-        }else
-        
         res.send(result);
-    
     })
 })
+
+
+
+
+// authentification
 
 
 

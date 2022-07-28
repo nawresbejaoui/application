@@ -39,16 +39,21 @@ export default function Product() {
   const locations=useLocation();
   const product_id=locations.pathname.split("/")[2]
 
+  const getdate=(test)=>{
+    return test.split('T')[0]
+  }
+
 
   
   useEffect(()=>{
-    const res=()=> axios
+    const res=async()=>await axios
                     .get(`http://localhost:5002/api/products/get/${product_id}`)
-                    .then((resp)=>setState({...resp.data}));
+                    .then((resp)=>setState({...resp.data[0]}));
                     res();
      
 
   },[product_id]);
+
 
 
   const handleSubmit=(e)=>{
@@ -56,19 +61,24 @@ export default function Product() {
       if(!date_production || !lieu || !date_extraction || !date_control || !technique_stockage|| !n_lots || !date_expiration){
           toast.error("please provide value into each input field")
       }else{
+
+
+       
           axios
                .put(`http://localhost:5002/api/products/${product_id}`,{
+                
                    
-                date_production,
+                date_production:getdate(date_production),
                 lieu,
-                date_extraction,
-                date_control,
+                date_extraction:getdate(date_extraction),
+                date_control:getdate(date_control),
                 technique_stockage,
                 n_lots,
-                date_expiration,
+                date_expiration:getdate(date_expiration),
 
                })
-               .then(()=>{
+               .then((res)=>{
+               
                   setState({date_production:"",lieu:"",date_extraction:"",date_control:"", technique_stockage:"",n_lots:"", date_expiration:""});
                })
                .catch((err)=>toast.error(err.response.data));
@@ -83,7 +93,10 @@ export default function Product() {
       setState({...state, [name]:value})
   }
   return (
+   
+   
     <div className="product">
+       
       <div className="productTitleContainer">
         <h1 className="productTitle">Product</h1>
         <Link to="/newproduct">
@@ -110,7 +123,7 @@ export default function Product() {
                     id="lieu"
                     name="lieu"
                     placeholder="lieu"
-                    value={lieu || ""}
+                    value={lieu }
                   
                     onChange={handleInputChange}  />
                   <label>Date_Extraction</label>
@@ -138,7 +151,7 @@ export default function Product() {
                     id="technique_stockage"
                     name="technique_stockage"
                     placeholder="technique de stockage"
-                    value={technique_stockage ||""}
+                    value={technique_stockage }
                     onChange={handleInputChange}/>
 
                   <label>n_lots</label>
@@ -168,6 +181,8 @@ export default function Product() {
               </div>
           </form>
       </div>
+   
     </div>
-  );
+   
+);
 }

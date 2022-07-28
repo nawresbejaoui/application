@@ -6,9 +6,6 @@ import {
   Storefront,
 
 
-  MailOutline,
-
-  ChatBubbleOutline,
   
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
@@ -20,7 +17,7 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
-            <Link to="/home" className="link">
+            <Link to="/" className="link">
             <li className="sidebarListItem active">
               <LineStyle className="sidebarIcon" />
               Home
@@ -50,20 +47,7 @@ export default function Sidebar() {
           </ul>
         </div>
       
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Notifications</h3>
-          <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <MailOutline className="sidebarIcon" />
-              Mail
-            </li>
-          
-            <li className="sidebarListItem">
-              <ChatBubbleOutline className="sidebarIcon" />
-              Messages
-            </li>
-          </ul>
-        </div>
+       
         
       </div>
     </div>

@@ -8,8 +8,7 @@ import NewUser from "./pages/newUser/NewUser";
 import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
-import Login from "./pages/authentication/Login";
-import Register from "./pages/authentication/Register";
+
 import Dashboard from "./pages/Dashboard";
 import Client from "./pages/clients/client/Client";
 import LaboControl from "./pages/clients/laboControl/LaboControl";
@@ -19,12 +18,17 @@ import UniteMiseBouteille from "./pages/clients/uniteMiseBouteille/UniteMiseBout
 import UniteStockage from "./pages/clients/uniteStockage/UniteStockage";
 import { ToastContainer } from "react-toastify";
 
+import SignInOutContainer from './containers';
+
+
+
 
 
 function App() {
   return (
     <>
     <ToastContainer />
+    
     <Router>
       
       
@@ -35,7 +39,7 @@ function App() {
                   
 
                   <Route path='/' element={<Dashboard />} >
-                  <Route path='home' element={<Home />} />
+                  <Route path='/' element={<Home />} />
                   
                   
                   <Route path='users' element={<UserList />} />
@@ -54,9 +58,13 @@ function App() {
                   <Route path='/labo' element={<LaboControl />} />
                   <Route path='/stockage' element={<UniteStockage />} />
                   <Route path='/mise_bouteille' element={<UniteMiseBouteille />} />
+
+
+
+                  <Route path='/login' element={<SignInOutContainer />} />
+                 
                   
-                  <Route path='/login' element={<Login />} />
-                  <Route path='/register' element={<Register />} />
+                 
                  
                  
                 </Routes>

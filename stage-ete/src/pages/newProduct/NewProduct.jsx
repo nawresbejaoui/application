@@ -37,6 +37,7 @@ export default function NewProduct() {
       if(!product_id || !date_production || !lieu || !date_extraction || !date_control || !technique_stockage|| !n_lots || !date_expiration ){
           toast.error("please provide value into each input field")
       }else{
+        console.log(state);
           axios
                .post("http://localhost:5002/api/products/post" ,{
                 product_id,
