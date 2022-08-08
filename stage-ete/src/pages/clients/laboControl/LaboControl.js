@@ -1,10 +1,12 @@
-import React , {useState} from 'react';
-import {Link} from 'react-router-dom';
+import React , {useState,useEffect} from 'react';
+import { Link} from 'react-router-dom';
 import './LaboControl.css';
 import axios from "axios";
+import 'react-toastify/dist/ReactToastify.css';
 import { toast} from 'react-toastify';
 import styled from "styled-components";
-
+import PageHeader from "../../../components/PageHeader";
+import Storefront from '@mui/icons-material/Storefront';
 
 const Container = styled.div`
   width: 100vw;
@@ -28,39 +30,35 @@ const initialState={
   
 };
 
-const Moulin = () => {
+const LaboControl = () => {
     const [state,setState]=useState(initialState);
-    const {product_id,date_control}=state;
-
-  
-
-
-
-
-
-
+    const [products,setProducts]=useState("");
+    const {product_id,  date_control}=state
  
+    useEffect(()=>{
+      axios
+      .get(`http://localhost:5002/api/products/AllId`)
+      .then((res)=>{
+        setProducts(res.data);
+      })
+      .catch((err)=>toast.error(err.response.data));
+  },[] );
 
     const handleSubmit=(e)=>{
         e.preventDefault();
-        if(!product_id || !date_control ){
+        if(!product_id || ! date_control ){
             toast.error("please provide value into each input field")
         }else{
           
                 axios
-                .put(`http://localhost:5002/api/products/${product_id}`,{
-                  product_id,
+                .put(`http://localhost:5002/api/products/labo/${product_id}`,{
                   date_control,
-                 
-
                 })
                 .then(()=>{
-                   setState({product_id:"",date_control:""});
+                  toast.success('product added successfully');
                 })
                 .catch((err)=>toast.error(err.response.data));
-                toast.success('product added successfully');
-                
-               
+
         }
     };
 
@@ -68,14 +66,23 @@ const Moulin = () => {
         const {name,value}= e.target;
         setState({...state, [name]:value})
     }
+  
+ 
 
-
-
+ 
 
   return (
+    <>
+     <PageHeader
+                title="New Product"
+                subTitle="C'est l'interface du laboratoire de control "
+                icon={<Storefront fontSize="large" />}
+            />
     <Container>
+     
    
-    <div style={{marginRight:"350px"}}>
+    <div style={{marginBottom:"300px",
+                 marginRight:"350px"}}>
         <form style={{
             margin:"auto",
             padding:"15px",
@@ -85,28 +92,33 @@ const Moulin = () => {
         onSubmit={handleSubmit}>
 
         <label htmlFor='product_id'>ID</label>
-        <input
-        type="text"
-        id="product_id"
-        name="product_id"
-        placeholder="ID"
-        value={product_id || ""}
-        onChange={handleInputChange}
+       
 
-        />
-        <label htmlFor='date_control'>Date_Control</label>
+      <select id="product_id"
+        name="product_id" onChange={handleInputChange}>
+           <option value="">--Select Id--</option>
+           {
+            products && products.map((product,index) => (
+<option key={index} value={product.product_id}>{product.product_id}</option>
+            )
+            )
+           }
+
+      </select>
+       
+        <label htmlFor='  date_control'>Date_Control</label>
         <input
         type="date"
         id="date_control"
         name="date_control"
         placeholder="YYYY-MM-DD"
-        value={date_control || ""}
+        value={date_control}
         onChange={handleInputChange}
         
         />
-      
+        
 
-        <input type="submit" value="Save"/>
+        <input type="submit"    value="Save"/>
         <Link to="/client">
             <input type="button" value="Go Back" />
         </Link>
@@ -119,8 +131,10 @@ const Moulin = () => {
     </div>
    
     </Container>
+    </>
+
   )
 
 }
 
-export default Moulin
+export default LaboControl

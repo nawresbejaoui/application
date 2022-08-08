@@ -18,8 +18,10 @@ import UniteMiseBouteille from "./pages/clients/uniteMiseBouteille/UniteMiseBout
 import UniteStockage from "./pages/clients/uniteStockage/UniteStockage";
 import { ToastContainer } from "react-toastify";
 
-import SignInOutContainer from './containers';
 
+
+import Login from './/pages/Login';
+import Register from './pages/Register';
 
 
 
@@ -60,8 +62,10 @@ function App() {
                   <Route path='/mise_bouteille' element={<UniteMiseBouteille />} />
 
 
+                  <Route path='/Login' element={<Login />} />
+                  <Route path='/register' element={<Register />} />
 
-                  <Route path='/login' element={<SignInOutContainer />} />
+                  
                  
                   
                  

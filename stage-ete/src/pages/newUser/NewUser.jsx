@@ -7,7 +7,7 @@ import { toast, Toast} from 'react-toastify';
 
 
 const initialState={
-  user_id:"",
+  
   username:"",
   password:"",
   location:"",
@@ -20,7 +20,7 @@ const initialState={
 
 export default function NewUser() {
   const [state,setState]=useState(initialState);
-  const {user_id,username,password,location,URL,product_id,role,certifications,n_lots}=state;
+  const {username,password,location,URL,product_id,role,certifications,n_lots}=state;
 
   const  navigate = useNavigate();
 
@@ -28,12 +28,12 @@ export default function NewUser() {
 
   const handleSubmit=(e)=>{
       e.preventDefault();
-      if(!user_id || !username || !password || !location || !URL || !product_id || !role || !certifications || !n_lots){
+      if( !username || !password || !location || !URL || !product_id || !role || !certifications || !n_lots){
           toast.error("please provide value into each input field")
       }else{
           axios
                .post("http://localhost:5002/api/users/post" ,{
-                user_id,
+                
                 username,
                 password,
                 location,
@@ -46,7 +46,7 @@ export default function NewUser() {
 
                })
                .then(()=>{
-                  setState({user_id:"",username:"",password:"",location:"",URL:"",product_id:"",role:"",certifications:"",n_lots:""});
+                  setState({username:"",password:"",location:"",URL:"",product_id:"",role:"",certifications:"",n_lots:""});
                })
                .catch((err)=>toast.error(err.response.data));
                toast.success("user added successfully");
@@ -66,15 +66,7 @@ export default function NewUser() {
     <div className="newUser">
       <h1 className="newUserTitle">New User</h1>
       <form  onSubmit={handleSubmit} className="newUserForm" >
-      <div className="newUserItem">
-          <label>ID</label>
-          <input type="text" 
-           id="user_id"
-           name="user_id"
-          placeholder="Your ID..."
-          value={user_id}
-          onChange={handleInputChange} />
-        </div>
+      
         <div className="newUserItem">
           <label>Username</label>
           <input type="text" 

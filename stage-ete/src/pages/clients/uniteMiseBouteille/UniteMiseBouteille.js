@@ -1,10 +1,12 @@
-import React , {useState} from 'react';
-import {Link} from 'react-router-dom';
+import React , {useState,useEffect} from 'react';
+import { Link} from 'react-router-dom';
 import './uniteMiseEnBouteille.css';
 import axios from "axios";
+import 'react-toastify/dist/ReactToastify.css';
 import { toast} from 'react-toastify';
 import styled from "styled-components";
-
+import PageHeader from "../../../components/PageHeader";
+import Storefront from '@mui/icons-material/Storefront';
 
 const Container = styled.div`
   width: 100vw;
@@ -25,21 +27,22 @@ const Container = styled.div`
 const initialState={
   product_id:"",
   n_lots:"",
-  date_expiration:"",
+  
 };
 
-const UniteMiseBouteille = () => {
+const Moulin = () => {
     const [state,setState]=useState(initialState);
-    const {product_id,n_lots,date_expiration}=state;
-
-   
-
-
-
-
-
-
+    const [products,setProducts]=useState("");
+    const {product_id, n_lots,date_expiration}=state
  
+    useEffect(()=>{
+      axios
+      .get(`http://localhost:5002/api/products/AllId`)
+      .then((res)=>{
+        setProducts(res.data);
+      })
+      .catch((err)=>toast.error(err.response.data));
+  },[] );
 
     const handleSubmit=(e)=>{
         e.preventDefault();
@@ -48,19 +51,15 @@ const UniteMiseBouteille = () => {
         }else{
           
                 axios
-                .put(`http://localhost:5002/api/products/${product_id}`,{
-                  product_id,
+                .put(`http://localhost:5002/api/products/miseBouteille/${product_id}`,{
                   n_lots,
                   date_expiration,
-
                 })
                 .then(()=>{
-                   setState({product_id:"",n_lots:"",date_expiration:""});
+                  toast.success('product added successfully');
                 })
                 .catch((err)=>toast.error(err.response.data));
-                toast.success('product added successfully');
-                
-               
+
         }
     };
 
@@ -70,13 +69,20 @@ const UniteMiseBouteille = () => {
     }
 
 
-
+ 
 
   return (
+    <>
+     <PageHeader
+                title="New Product"
+                subTitle="C'est l'interface de L'unite de mise en bouteille"
+                icon={<Storefront fontSize="large" />}
+            />
     <Container>
      
    
-    <div style={{marginRight:"350px"}}>
+    <div style={{marginBottom:"300px",
+                 marginRight:"350px"}}>
         <form style={{
             margin:"auto",
             padding:"15px",
@@ -86,38 +92,45 @@ const UniteMiseBouteille = () => {
         onSubmit={handleSubmit}>
 
         <label htmlFor='product_id'>ID</label>
-        <input
-        type="text"
-        id="product_id"
-        name="product_id"
-        placeholder="ID"
-        value={product_id || ""}
-        onChange={handleInputChange}
+       
 
-        />
-          <label htmlFor='n-lots'>N_Lots</label>
+      <select id="product_id"
+        name="product_id" onChange={handleInputChange}>
+           <option value="">--Select Id--</option>
+           {
+            products && products.map((product,index) => (
+<option key={index} value={product.product_id}>{product.product_id}</option>
+            )
+            )
+           }
+
+      </select>
+
+          
+      <label htmlFor=' n_lots'>N_lots</label>
         <input
         type="text"
         id="n_lots"
         name="n_lots"
         placeholder="n_lots"
-        value={n_lots || ""}
+        value={n_lots}
         onChange={handleInputChange}
         
         />
-        <label htmlFor='date_expiration'>Date_Expiration</label>
+       
+        <label htmlFor=' date_expiration'>Date_Extraction</label>
         <input
         type="date"
         id="date_expiration"
         name="date_expiration"
         placeholder="YYYY-MM-DD"
-        value={date_expiration || ""}
+        value={date_expiration}
         onChange={handleInputChange}
         
         />
-      
+        
 
-        <input type="submit" value="Save"/>
+        <input type="submit"    value="Save"/>
         <Link to="/client">
             <input type="button" value="Go Back" />
         </Link>
@@ -130,8 +143,10 @@ const UniteMiseBouteille = () => {
     </div>
    
     </Container>
+    </>
+
   )
 
 }
 
-export default UniteMiseBouteille
+export default Moulin

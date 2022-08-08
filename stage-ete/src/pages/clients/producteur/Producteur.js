@@ -50,7 +50,7 @@ const Producteur = () => {
         }else{
           
                 axios
-                .post("http://localhost:5002/api/products/producteur",{
+                .post("http://localhost:5002/api/producteur",{
                   product_id,
                   date_production,
                   lieu,
@@ -78,13 +78,14 @@ const Producteur = () => {
     <>
      <PageHeader
                 title="New Product"
-                subTitle="C'est l'interface du producteur"
+                subTitle="C'est l'interface du Producteur"
                 icon={<Storefront fontSize="large" />}
             />
     <Container>
      
    
-    <div style={{marginRight:"350px"}}>
+    <div style={{marginBottom:"300px",
+                 marginRight:"350px"}}>
         <form style={{
             margin:"auto",
             padding:"15px",

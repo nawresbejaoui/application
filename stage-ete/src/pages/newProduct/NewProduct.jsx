@@ -9,7 +9,7 @@ import { toast} from 'react-toastify';
 
 
 const initialState={
-  product_id:"",
+  
   date_production:"",
   lieu:"",
   date_extraction:"",
@@ -26,7 +26,7 @@ const initialState={
 
 export default function NewProduct() {
   const [state,setState]=useState(initialState);
-  const {product_id,date_production,lieu,date_extraction,date_control,technique_stockage,n_lots,date_expiration}=state;
+  const {date_production,lieu,date_extraction,date_control,technique_stockage,n_lots,date_expiration}=state;
 
   const  navigate = useNavigate();
 
@@ -34,13 +34,13 @@ export default function NewProduct() {
 
   const handleSubmit=(e)=>{
       e.preventDefault();
-      if(!product_id || !date_production || !lieu || !date_extraction || !date_control || !technique_stockage|| !n_lots || !date_expiration ){
+      if( !date_production || !lieu || !date_extraction || !date_control || !technique_stockage|| !n_lots || !date_expiration ){
           toast.error("please provide value into each input field")
       }else{
         console.log(state);
           axios
                .post("http://localhost:5002/api/products/post" ,{
-                product_id,
+                
                 date_production,
                 lieu,
                 date_extraction,
@@ -52,7 +52,7 @@ export default function NewProduct() {
 
                })
                .then(()=>{
-                  setState({product_id:"",date_production:"",lieu:"",date_extraction:"",date_control:"", technique_stockage:"",n_lots:"", date_expiration:""});
+                  setState({date_production:"",lieu:"",date_extraction:"",date_control:"", technique_stockage:"",n_lots:"", date_expiration:""});
                })
                .catch((err)=>toast.error(err.response.data));
                toast.success("product added successfully");
@@ -70,15 +70,7 @@ export default function NewProduct() {
     <div className="newProduct">
       <h1 className="addProductTitle">New Product</h1>
       <form onSubmit={handleSubmit}  className="addProductForm">
-      <div className="addProductItem">
-          <label> ID </label>
-          <input type="text" 
-          id="product_id"
-          name="product_id"
-          placeholder="ID"
-          value={product_id}
-          onChange={handleInputChange}  />
-        </div>
+   
      
       <div className="addProductItem">
           <label>Date_Production</label>

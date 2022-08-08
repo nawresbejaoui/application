@@ -4,10 +4,12 @@ import {
   
   PermIdentity,
   Storefront,
+  
 
 
   
 } from "@material-ui/icons";
+import LogoutOutlined from '@mui/icons-material/LogoutOutlined';
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {
@@ -28,7 +30,7 @@ export default function Sidebar() {
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Quick Menu</h3>
+          <h3 className="sidebarTitle">Management</h3>
           <ul className="sidebarList">
             <Link to="/users" className="link">
               <li className="sidebarListItem">
@@ -42,8 +44,19 @@ export default function Sidebar() {
                 Products
               </li>
             </Link>
+            </ul>
+            </div>
             
-           
+
+            <div className="sidebarMenu">
+          <h3 className="sidebarTitle">Exit Administrator</h3>
+          <ul className="sidebarList">
+            <Link to="/login" className="link">
+              <li className="sidebarListItem">
+                <LogoutOutlined className="sidebarIcon" />
+                Logout
+              </li>
+            </Link>
           </ul>
         </div>
       

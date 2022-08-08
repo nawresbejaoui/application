@@ -53,7 +53,7 @@ const Client = () => {
       
       <Wrapper>
         <ImgContainer>
-          <Image src="https://group-cho.com/wp-content/uploads/2020/11/Chaal-Ar-En-2-877x1024.jpg" />
+          <Image src="https://www.cosmetiquesnaturels.ch/1000-large_default/olive-vierge-extra-huile-cosmetique.jpg" />
         </ImgContainer>
         <InfoContainer>
           <Title>Huile d'olive</Title>
