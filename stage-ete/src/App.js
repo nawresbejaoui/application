@@ -1,7 +1,11 @@
 
 import "./App.css";
 import Home from "./pages/home/Home";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 import UserList from "./pages/userList/UserList";
 import User from "./pages/user/User";
 import NewUser from "./pages/newUser/NewUser";
@@ -10,41 +14,53 @@ import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 
 import Dashboard from "./pages/Dashboard";
-import Client from "./pages/clients/client/Client";
+
 import LaboControl from "./pages/clients/laboControl/LaboControl";
 import Moulin from "./pages/clients/moulin/Moulin";
 import Producteur from "./pages/clients/producteur/Producteur";
 import UniteMiseBouteille from "./pages/clients/uniteMiseBouteille/UniteMiseBouteille";
 import UniteStockage from "./pages/clients/uniteStockage/UniteStockage";
 import { ToastContainer } from "react-toastify";
+import Unauthorized from './pages/Unauthorized';
+
+import AuthProvider ,{AuthContext} from './context/AuthProvider';
+import {useAuth} from './hooks/useAuth';
+import {useContext} from 'react';
 
 
 
-import Login from './/pages/Login';
+
+import Login from './pages/Login';
 import Register from './pages/Register';
 
 
 
 
 function App() {
+
+  const user=useContext(AuthContext);
+ console.log(user.role+"hello admin"); 
+
   return (
-    <>
+    <AuthProvider >
     <ToastContainer />
-    
-    <Router>
+    <BrowserRouter>
+   
       
       
      
-                
+              
             
                 <Routes>
+              
                   
+                     {/* we want to protect these routes */}
+                  
+
 
                   <Route path='/' element={<Dashboard />} >
                   <Route path='/' element={<Home />} />
-                  
-                  
-                  <Route path='users' element={<UserList />} />
+                   <Route path='users' element={<UserList />} />
                   <Route path="user/:userId" element={<User  />} />
                   <Route path="newUser" element={<NewUser  />} />
                   <Route path="products" element={<ProductList/>} />
@@ -52,7 +68,7 @@ function App() {
                   <Route path="newproduct" element={<NewProduct />} />
                   </Route>
 
-                  <Route path='/client' element={<Client />} />
+                  
                   <Route path='/producteur' element={<Producteur />} />
                 
                   <Route path='/moulin' element={<Moulin />} />
@@ -62,21 +78,28 @@ function App() {
                   <Route path='/mise_bouteille' element={<UniteMiseBouteille />} />
 
 
-                  <Route path='/Login' element={<Login />} />
+
+                    {/* public routes */}
+                  
+                  <Route path='/login' element={<Login />} />
                   <Route path='/register' element={<Register />} />
+                  <Route path='/unauthorized' element={<Unauthorized />} />
+
 
                   
                  
                   
                  
                  
-                 
+                
                 </Routes>
                  
       
 
-    </Router>
-    </>
+    
+    </BrowserRouter>
+    </AuthProvider>
+  
   );
 }
 

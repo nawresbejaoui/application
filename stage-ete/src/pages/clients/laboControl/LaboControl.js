@@ -119,7 +119,7 @@ const LaboControl = () => {
         
 
         <input type="submit"    value="Save"/>
-        <Link to="/client">
+        <Link to="/login">
             <input type="button" value="Go Back" />
         </Link>
         
