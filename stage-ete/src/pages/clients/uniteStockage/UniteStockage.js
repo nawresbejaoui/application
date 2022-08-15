@@ -1,5 +1,5 @@
-import React , {useState,useEffect} from 'react';
-import { Link} from 'react-router-dom';
+
+import { Link,useNavigate} from 'react-router-dom';
 import './uniteStockage.css';
 import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,7 +7,8 @@ import { toast} from 'react-toastify';
 import styled from "styled-components";
 import PageHeader from "../../../components/PageHeader";
 import Storefront from '@mui/icons-material/Storefront';
-
+import {AuthContext} from '../../../context/AuthProvider';
+import React , {useState,useEffect,useContext} from 'react';
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -34,6 +35,15 @@ const Moulin = () => {
     const [state,setState]=useState(initialState);
     const [products,setProducts]=useState("");
     const {product_id, technique_stockage}=state
+    const navigate=useNavigate();
+
+    const [auth, setAuth] = useContext(AuthContext);
+    
+    const logout = ()=>{
+       setAuth(null)
+    
+      navigate('/login')
+    }
  
     useEffect(()=>{
       axios
@@ -120,7 +130,7 @@ const Moulin = () => {
 
         <input type="submit"    value="Save"/>
         <Link to="/login">
-            <input type="button" value="Go Back" />
+            <input type="button"  onClick={logout} value="Go Back" />
         </Link>
         
             

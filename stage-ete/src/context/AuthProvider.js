@@ -30,7 +30,7 @@ export const AuthContext = createContext({});
  
 
     return (
-        <AuthContext.Provider value={auth}>
+        <AuthContext.Provider value={[auth, setAuth]}>
                <LoginContext.Provider value={login}>
                   {children}
                </LoginContext.Provider>

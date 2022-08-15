@@ -14,18 +14,18 @@ function Login() {
 
   const username = useRef();
   const password = useRef();
-  const user=useContext(AuthContext);
+  const [auth, setAuth] = useContext(AuthContext);
   const navigate=useNavigate();
   
  
-   console.log("user",user) ;
+
 
   const loginContext = useContext(LoginContext);
 
 
   useEffect(()=>{
-    if(user){
-      switch(user.role){
+    if(auth){
+      switch(auth.role){
         case "Admin":
         return navigate("/", { replace: true });
         case "Producteur":
@@ -45,7 +45,7 @@ function Login() {
 
     }
    
-},[user] );
+},[auth] );
 
 
   const submit = async (e) => {

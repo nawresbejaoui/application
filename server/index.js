@@ -182,9 +182,6 @@ app.get('/login', (req, res)=>{
 
 
 
-
-
-
 //users
 
 app.get('/api/users/get',(req,res)=>{

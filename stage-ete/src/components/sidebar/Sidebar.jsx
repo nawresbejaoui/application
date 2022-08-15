@@ -10,9 +10,23 @@ import {
   
 } from "@material-ui/icons";
 import LogoutOutlined from '@mui/icons-material/LogoutOutlined';
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
+import axios from "axios";
+import {AuthContext} from '../../context/AuthProvider';
+import React, { useContext } from "react";
 
 export default function Sidebar() {
+  
+const navigate=useNavigate();
+
+const [auth, setAuth] = useContext(AuthContext);
+
+const logout = ()=>{
+   setAuth(null)
+
+  navigate('/login')
+}
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -51,7 +65,7 @@ export default function Sidebar() {
             <div className="sidebarMenu">
           <h3 className="sidebarTitle">Exit Administrator</h3>
           <ul className="sidebarList">
-            <Link to="/login" className="link">
+            <Link onClick={logout} to="/login"  className="link">
               <li className="sidebarListItem">
                 <LogoutOutlined className="sidebarIcon" />
                 Logout

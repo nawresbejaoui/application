@@ -1,5 +1,5 @@
-import React , {useState} from 'react';
-import { Link} from 'react-router-dom';
+
+import { Link ,useNavigate} from 'react-router-dom';
 import './Producteur.css';
 import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,6 +7,8 @@ import { toast} from 'react-toastify';
 import styled from "styled-components";
 import PageHeader from "../../../components/PageHeader";
 import Storefront from '@mui/icons-material/Storefront';
+import {AuthContext} from '../../../context/AuthProvider';
+import React , {useState,useContext} from 'react';
 
 const Container = styled.div`
   width: 100vw;
@@ -33,7 +35,15 @@ const initialState={
 const Producteur = () => {
     const [state,setState]=useState(initialState);
     const {product_id,date_production,lieu}=state;
+    const navigate=useNavigate();
 
+    const [auth, setAuth] = useContext(AuthContext);
+    
+    const logout = ()=>{
+       setAuth(null)
+    
+      navigate('/login')
+    }
   
 
 
@@ -41,7 +51,6 @@ const Producteur = () => {
 
 
 
- 
 
     const handleSubmit=(e)=>{
         e.preventDefault();
@@ -127,7 +136,7 @@ const Producteur = () => {
 
         <input type="submit"    value="Save"/>
         <Link to="/login">
-            <input type="button" value="Go Back" />
+            <input type="button"  onClick={logout} value="Go Back" />
         </Link>
         
             
