@@ -78,7 +78,15 @@ export default function NewUser() {
         </div>
         <div className="newUserItem">
           <label>Password</label>
-          <input type="password" 
+          <input style={{   width: "50%",
+                           padding: "12px 20px",
+                           margin: "8px 0",
+                           marginRight: "450px",
+                          
+                           border: "1px solid #ccc",
+                           borderRadius: "4px",
+                           boxSizing: "border-box",
+                          alignItems: "center"}} type="password" 
            id="password"
            name="password"
           placeholder="Your Password..."

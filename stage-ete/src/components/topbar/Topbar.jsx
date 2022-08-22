@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useContext,useEffect } from "react";
 import "./topbar.css";
 import { NotificationsNone, Language, Settings } from "@material-ui/icons";
+import {AuthContext} from '../../context/AuthProvider';
+
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function Topbar() {
+  const [auth, setAuth] = useContext(AuthContext);
+  const navigate=useNavigate();
+
+
+  useEffect(()=>{
+    if(!auth){
+     navigate('/login')
+
+    }
+   
+},[auth] );
   return (
     <div className="topbar">
       <div className="topbarWrapper">
